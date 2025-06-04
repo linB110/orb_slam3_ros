@@ -55,9 +55,11 @@ Each result file contains 50 RMSE values from repeated runs:
 ## 📊 Results
 
 The RMSE distributions below demonstrate the effect of varying `nLevels`:
-
+|easy dataset comparison|
 ![RMSE Distribution](./rmse_easy_result)
 
+|difficult dataset comparison|
+![RMSE Distribution](./rmse_hard_result)
 - **`nLevels = 8`** results in lower RMSE and more stable trajectories
 - **`nLevels = 1`** leads to slightly higher RMSE and greater variance, especially in harder sequences
 
