@@ -23,7 +23,7 @@ Each configuration is tested on **EuRoC sequences** using ROS bags and analyzed 
 
 ## 🔧 Workflow
 
-1. Modify the `ORBextractor.cc` file to set desired `nLevels`
+1. Modify the `config/EuRoC.yaml` file to set desired `nLevels`
 2. Rebuild the workspace
 3. Use the provided automated bash script to:
    - Launch the SLAM system
@@ -31,6 +31,7 @@ Each configuration is tested on **EuRoC sequences** using ROS bags and analyzed 
    - Wait for `KeyFrameTrajectory.txt`
    - Convert trajectory to TUM format
    - Run `evo_ape` for RMSE analysis
+   - you need to open ros node (roscore) by yourself 
 4. Repeat this over 50 runs to collect statistical data
 
 ## 🛠️ Scripts
