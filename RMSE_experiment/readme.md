@@ -18,7 +18,7 @@ Each configuration is tested on **EuRoC sequences** using ROS bags and analyzed 
 ## 📁 Dataset
 
 - **Easy**: `MH_01_easy.bag`
-- **Hard**: e.g., `MH_04_difficult.bag`
+- **Hard**: e.g., `MH_05_difficult.bag`
 - Both downloaded from the [EuRoC MAV Dataset](https://projects.asl.ethz.ch/datasets/doku.php?id=kmavvisualinertialdatasets)
 
 ## 🔧 Workflow
