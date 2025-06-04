@@ -1,58 +1,58 @@
-# ORB-SLAM3 Parameter Evaluation: `ORBextractor.nLevels`
+# ORB-SLAM3 ROS Parameter Evaluation: `ORBextractor.nLevels`
 
-## 📌 Overview
+## 🧭 Project Context
 
-This repository is a fork of [ORB-SLAM3](https://github.com/UZ-SLAMLab/ORB_SLAM3), extended to investigate the impact of the `ORBextractor.nLevels` parameter on trajectory accuracy using the EuRoC MAV dataset.
+This is a fork of [`orb_slam3_ros`](https://github.com/thien94/orb_slam3_ros), a ROS wrapper for the official ORB-SLAM3 system.  
+We extend it to evaluate the influence of the `ORBextractor.nLevels` parameter under real-world conditions using the **EuRoC MAV dataset**.
 
-## 🔍 Purpose
+## 🎯 Objective
 
-Evaluate how the number of pyramid levels used in ORB feature extraction (`ORBextractor.nLevels`) affects Absolute Pose Error (APE) on different EuRoC sequences.
+Evaluate how changing the number of pyramid levels (`ORBextractor.nLevels`) in ORB feature extraction affects SLAM accuracy.
 
-## 🧪 Experimental Setup
+We ran experiments with:
+- `nLevels = 8` (default)
+- `nLevels = 1` (more aggressive, faster, but potentially less robust)
 
-- **Dataset**: EuRoC MAV Dataset
-  - `MH_01_easy.bag` (easy case)
-  - `MH_03_medium.bag` or `MH_04_difficult.bag` (as hard case)
-- **Parameter under test**: `ORBextractor.nLevels`
-  - Compared values: `n = 8` (default) vs. `n = 1`
-- **Metric**: RMSE from Absolute Pose Error (APE)
-- **Evaluation Tool**: [evo](https://github.com/MichaelGrupp/evo)
-- **Repetitions**: Each setting was tested over 50 runs for statistical robustness
+Each configuration is tested on **EuRoC sequences** using ROS bags and analyzed through RMSE of Absolute Pose Error (APE).
 
-## ⚙️ Methodology
+## 📁 Dataset
 
-For each setting:
-- Launch ORB-SLAM3 via `roslaunch`
-- Play the dataset with `rosbag play`
-- Wait for `KeyFrameTrajectory.txt` to be generated
-- Convert trajectory to TUM format
-- Use `evo_ape` to compute RMSE
-- Append results to output files
+- **Easy**: `MH_01_easy.bag`
+- **Hard**: e.g., `MH_04_difficult.bag`
+- Both downloaded from the [EuRoC MAV Dataset](https://projects.asl.ethz.ch/datasets/doku.php?id=kmavvisualinertialdatasets)
 
-All steps are automated in a Bash script. RMSE results are logged separately for easy and hard sequences.
+## 🔧 Workflow
+
+1. Modify the `ORBextractor.cc` file to set desired `nLevels`
+2. Rebuild the workspace
+3. Use the provided automated bash script to:
+   - Launch the SLAM system
+   - Play a dataset (`rosbag`)
+   - Wait for `KeyFrameTrajectory.txt`
+   - Convert trajectory to TUM format
+   - Run `evo_ape` for RMSE analysis
+4. Repeat this over 50 runs to collect statistical data
+
+## 🛠️ Scripts
+
+- `run_experiment.sh`: Automates the entire process
+- `rmse_distribution_stats.py`: Parses and visualizes RMSE distributions
+
+Output files:
+- `rmse_easy_result`
+- `rmse_hard_result`
 
 ## 📊 Results
 
-The following plot visualizes RMSE distributions for both parameter settings:
+The RMSE distributions show the impact of the `nLevels` setting:
 
-![RMSE Distribution Comparison](./RMSE_experiment/rmse_distribution_comparison.png)
+![RMSE Distribution](./RMSE_experiment/rmse_distribution_comparison.png)
 
-- `n = 8` achieves consistently lower and more stable RMSE values
-- `n = 1` results in higher error and wider spread
+- `nLevels = 8` (default) has lower RMSE and tighter distribution
+- `nLevels = 1` results in higher and more varied RMSE
 
-## 📁 Files
-
-- `rmse_easy_result`: RMSE values for the easy sequence
-- `rmse_hard_result`: RMSE values for the hard sequence
-- `RMSE_experiment/`: Folder containing scripts and plots
-
-## ▶️ Usage
-
-### Step 1: Run Experiments
-
-Make sure your workspace is built and sourced properly, then:
+## 🧪 Run the Experiments
 
 ```bash
-# Run automated evaluation (edit script to change nLevels value)
+# Run SLAM with desired configuration (adjust nLevels in source before build)
 ./run_experiment.sh
-
