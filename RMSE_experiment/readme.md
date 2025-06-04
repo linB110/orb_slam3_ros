@@ -32,11 +32,11 @@ Each configuration is tested on **EuRoC sequences** using ROS bags and analyzed 
    - Convert trajectory to TUM format
    - Run `evo_ape` for RMSE analysis
    - you need to open ros node (roscore) by yourself 
-4. Repeat this over 50 runs to collect statistical data
+4. Repeat this 100  runs to collect statistical data
 
 ## 🛠️ Scripts
 
-- `run_experiment.sh`: Automates the entire process
+- `auto_runORBSLAM3_n1_test.sh`: Automates the entire process
 - `rmse_distribution_stats.py`: Parses and visualizes RMSE distributions
 
 Output files:
@@ -47,7 +47,7 @@ Output files:
 
 The RMSE distributions show the impact of the `nLevels` setting:
 
-![RMSE Distribution](./RMSE_experiment/rmse_distribution_comparison.png)
+![RMSE Distribution](./RMSE_experiment/rmse_easy.png)
 
 - `nLevels = 8` (default) has lower RMSE and tighter distribution
 - `nLevels = 1` results in higher and more varied RMSE
@@ -57,3 +57,7 @@ The RMSE distributions show the impact of the `nLevels` setting:
 ```bash
 # Run SLAM with desired configuration (adjust nLevels in source before build)
 ./run_experiment.sh
+
+# Analyze results and generate plot
+python3 rmse_distribution_stats.py
+
